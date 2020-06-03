@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+// step1 给页面插入imgNode标签。 定义imgNode.setSrc方法。
+var myImage = (function() {
+	var imgNode = document.createElement('img');
+    document.body.appendChild(imgNode);
+	return {
+    	setSrc: function(src) {
+    		imgNode.src = src;
+    	}
+    }
+})();
+
+var preImage = (function() {
+	var img = new Image; 
+    img.onload = function() {
+        // step2 把代理img的src,赋值给真正的imgNode.
+        myImage.setSrc(img.src);
+    }; 
+ 
+    return {
+    	setSrc: function(src) {
+            // step3. 把loading.gif赋值给真正的imgNode
+            myImage.setSrc('../loading.png');
+            // step4. 把src形参，赋值给代理img,触发step2(当代理img加载完，把代理img的src属性值, 赋值给imageNode).
+            img.src = src;
+    	}
+    }
+})(); 
+ 
+preImage.setSrc('https://cn.bing.com/az/hprichbg/rb/TadamiTrain_ZH-CN13495442975_1920x1080.jpg'); 
+
+</script>
+</html>
